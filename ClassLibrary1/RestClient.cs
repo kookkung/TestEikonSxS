@@ -16,13 +16,7 @@ namespace EikonSxSClassLibrary
         DELETE
     }
 
-    public enum linkMethod
-    {
-        LINK,
-        UNLINK,
-        LINKED,
-        UNLINKED
-    }
+
 
     public class RestClient
     {

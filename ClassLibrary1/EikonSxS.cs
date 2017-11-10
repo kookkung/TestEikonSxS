@@ -7,7 +7,13 @@ using Newtonsoft.Json;
 
 namespace EikonSxSClassLibrary
 {
-
+    public enum linkMethod
+    {
+        BROADCAST,
+        STOPBROADCAST,
+        RECEIVED,
+        STOPRECEIVED
+    }
 
     public class EikonSxS
     {
@@ -159,14 +165,14 @@ namespace EikonSxSClassLibrary
                     case "linked":
                         DebugOutput("FOUND LINK COMMAND: " + myObject.command + " ID: "+ myObject.instanceId);
                         strInstanceId = myObject.instanceId;
-                        ChangeLinkToMyApp(linkMethod.LINKED, strInstanceId);    
+                        ChangeLinkToMyApp(linkMethod.RECEIVED, strInstanceId);    
                         break;
 
                     // received Unlinked command from Eikon App (Eikon App unlinks our app)
                     case "unlinked":
                         DebugOutput("FOUND UNLINK COMMAND: " + myObject.command + " ID: " + myObject.instanceId);
                         strInstanceId = myObject.instanceId;
-                        ChangeLinkToMyApp(linkMethod.UNLINKED, strInstanceId);  
+                        ChangeLinkToMyApp(linkMethod.STOPRECEIVED, strInstanceId);  
                         break;
 
                     // Linked EIkon App received Unlinked command from Eikon App (Eikon App unlinks our app)
@@ -234,10 +240,10 @@ namespace EikonSxSClassLibrary
                     // Found our instance, change status to Linked
                     DebugOutput("FOUND OUR LINKED APP with Instance ID :" + myApp.INSTANCEID);
 
-                    if (lnkMethod == linkMethod.LINKED)
-                        myApp.ISLINKED = true;
-                    else if (lnkMethod == linkMethod.UNLINKED)
-                        myApp.ISLINKED = false;
+                    if (lnkMethod == linkMethod.RECEIVED)
+                        myApp.RECEIVEDFROM = true;
+                    else if (lnkMethod == linkMethod.STOPRECEIVED)
+                        myApp.RECEIVEDFROM = false;
                     
                     bSuccess = true;
                 }                
@@ -280,15 +286,15 @@ namespace EikonSxSClassLibrary
         }   
 
 
-        public string DoLinkApp(linkMethod lnkMethod, EikonApp myApp)
+        public string BroadcastApp(linkMethod lnkMethod, EikonApp myApp)
         {
             string strResponse = "";
 
             JsonLinkApp jLinkApp = new JsonLinkApp();
 
-            if (lnkMethod == linkMethod.LINK)
+            if (lnkMethod == linkMethod.BROADCAST)
                 jLinkApp.command = "link";
-            else if (lnkMethod == linkMethod.UNLINK)
+            else if (lnkMethod == linkMethod.STOPBROADCAST)
                 jLinkApp.command = "unlink";
             else
                 jLinkApp.command = "";
@@ -312,18 +318,25 @@ namespace EikonSxSClassLibrary
                 if (myObject.isSuccess == true)
                 {
                     //Link/Unlink process Successfull, update our islinked state
-                    DebugOutput("LINK Success instanceID: " + myApp.INSTANCEID);
 
-                    if (lnkMethod == linkMethod.LINK)
-                        myApp.ISLINKED = true;
-                    else if (lnkMethod == linkMethod.UNLINK)
-                        myApp.ISLINKED = false;    
+
+                    if (lnkMethod == linkMethod.BROADCAST)
+                    {
+                        myApp.BROADCASTTO = true;
+                        DebugOutput("Set Broadcast To Success instanceID: " + myApp.INSTANCEID);
+                    }
+                        
+                    else if (lnkMethod == linkMethod.STOPBROADCAST)
+                    {
+                        myApp.BROADCASTTO = false;
+                        DebugOutput("Stop Broadcast Success instanceID: " + myApp.INSTANCEID);
+                    }                       
 
                                         
                 }
                 else
                 {
-                    DebugOutput("ERROR LAUNCHING APP");
+                    DebugOutput("ERROR in Linking/Unlinkg APP");
                 }
 
             }

@@ -322,7 +322,7 @@ namespace TestEikonSxS
             {
                 EikonApp myApp = (EikonApp)item.DataBoundItem;
 
-                eikon.DoLinkApp(linkMethod.LINK, myApp);
+                eikon.BroadcastApp(linkMethod.BROADCAST, myApp);
                 
             }
 
@@ -332,15 +332,15 @@ namespace TestEikonSxS
         private void btnUnLink_Click(object sender, EventArgs e)
         {
             // Scroll through datagridview and perform ulink on each selected rows
-            /*foreach (DataGridViewRow item in dgvAppList.SelectedRows)
+            foreach (DataGridViewRow item in dgvAppList.SelectedRows)
             {
                 EikonApp myApp = (EikonApp)item.DataBoundItem;
 
-                eikon.DoLinkApp(linkMethod.UNLINK, myApp);
+                eikon.BroadcastApp(linkMethod.STOPBROADCAST, myApp);
 
             }
 
-            bndEikonApps.ResetBindings(false);*/
+            bndEikonApps.ResetBindings(false);
         }
     }
 }

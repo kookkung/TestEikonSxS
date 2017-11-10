@@ -25,7 +25,10 @@ namespace EikonSxSClassLibrary
     public class EikonApp
     {
         public string INSTANCEID { get; set; } = "";
-        public bool ISLINKED { get; set; } = false;
+        public bool BROADCASTTO { get; set; } = false;
+        public bool RECEIVEDFROM { get; set; } = false;
+        
+
         public JsonApp APP { get; set; }
 
         public EikonApp(string id, JsonApp app, bool linked = false)

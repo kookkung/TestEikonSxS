@@ -71,8 +71,8 @@
             this.btnDelContext = new System.Windows.Forms.Button();
             this.btnClearContext = new System.Windows.Forms.Button();
             this.cmbAddContext = new System.Windows.Forms.ComboBox();
-            this.btnLink = new System.Windows.Forms.Button();
-            this.btnUnLink = new System.Windows.Forms.Button();
+            this.btnBroadcast = new System.Windows.Forms.Button();
+            this.btnStopBroadcast = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.lblWSState = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).BeginInit();
@@ -156,7 +156,7 @@
             // 
             this.txbDebug.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbDebug.Location = new System.Drawing.Point(21, 841);
+            this.txbDebug.Location = new System.Drawing.Point(32, 956);
             this.txbDebug.Multiline = true;
             this.txbDebug.Name = "txbDebug";
             this.txbDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -295,7 +295,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(113, 13);
             this.label12.TabIndex = 21;
-            this.label12.Text = "Steps 3 - Launch App:";
+            this.label12.Text = "Steps 4 - Launch App:";
             // 
             // btnLaunchApp
             // 
@@ -329,7 +329,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(28, 554);
+            this.label14.Location = new System.Drawing.Point(28, 546);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(115, 13);
             this.label14.TabIndex = 26;
@@ -344,22 +344,22 @@
             this.dgvAppList.Location = new System.Drawing.Point(31, 570);
             this.dgvAppList.Name = "dgvAppList";
             this.dgvAppList.ReadOnly = true;
-            this.dgvAppList.Size = new System.Drawing.Size(393, 186);
+            this.dgvAppList.Size = new System.Drawing.Size(767, 186);
             this.dgvAppList.TabIndex = 27;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(30, 488);
+            this.label15.Location = new System.Drawing.Point(30, 480);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(224, 13);
+            this.label15.Size = new System.Drawing.Size(272, 13);
             this.label15.TabIndex = 28;
-            this.label15.Text = "Step 4 create WebSocket for Linking context:";
+            this.label15.Text = "Step 3 (Optional) create WebSocket for Linking context:";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(30, 516);
+            this.label16.Location = new System.Drawing.Point(30, 508);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(93, 13);
             this.label16.TabIndex = 29;
@@ -368,7 +368,7 @@
             // btnWSConnect
             // 
             this.btnWSConnect.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnWSConnect.Location = new System.Drawing.Point(516, 516);
+            this.btnWSConnect.Location = new System.Drawing.Point(516, 508);
             this.btnWSConnect.Name = "btnWSConnect";
             this.btnWSConnect.Size = new System.Drawing.Size(75, 23);
             this.btnWSConnect.TabIndex = 31;
@@ -378,7 +378,7 @@
             // 
             // txbWSURL
             // 
-            this.txbWSURL.Location = new System.Drawing.Point(129, 516);
+            this.txbWSURL.Location = new System.Drawing.Point(129, 508);
             this.txbWSURL.Name = "txbWSURL";
             this.txbWSURL.Size = new System.Drawing.Size(373, 20);
             this.txbWSURL.TabIndex = 30;
@@ -386,7 +386,7 @@
             // btnWSDisconnect
             // 
             this.btnWSDisconnect.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnWSDisconnect.Location = new System.Drawing.Point(597, 516);
+            this.btnWSDisconnect.Location = new System.Drawing.Point(597, 508);
             this.btnWSDisconnect.Name = "btnWSDisconnect";
             this.btnWSDisconnect.Size = new System.Drawing.Size(75, 23);
             this.btnWSDisconnect.TabIndex = 32;
@@ -397,7 +397,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(474, 554);
+            this.label17.Location = new System.Drawing.Point(450, 774);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(101, 13);
             this.label17.TabIndex = 33;
@@ -409,10 +409,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lsbWSEvents.FormattingEnabled = true;
             this.lsbWSEvents.HorizontalScrollbar = true;
-            this.lsbWSEvents.Location = new System.Drawing.Point(504, 570);
+            this.lsbWSEvents.Location = new System.Drawing.Point(453, 790);
             this.lsbWSEvents.Name = "lsbWSEvents";
             this.lsbWSEvents.ScrollAlwaysVisible = true;
-            this.lsbWSEvents.Size = new System.Drawing.Size(422, 186);
+            this.lsbWSEvents.Size = new System.Drawing.Size(465, 160);
             this.lsbWSEvents.TabIndex = 34;
             // 
             // cmbAppName
@@ -516,30 +516,30 @@
             this.cmbAddContext.TabIndex = 42;
             this.cmbAddContext.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cmbAddContext_KeyUp);
             // 
-            // btnLink
+            // btnBroadcast
             // 
-            this.btnLink.Location = new System.Drawing.Point(427, 608);
-            this.btnLink.Name = "btnLink";
-            this.btnLink.Size = new System.Drawing.Size(75, 23);
-            this.btnLink.TabIndex = 43;
-            this.btnLink.Text = "Link";
-            this.btnLink.UseVisualStyleBackColor = true;
-            this.btnLink.Click += new System.EventHandler(this.btnLink_Click);
+            this.btnBroadcast.Location = new System.Drawing.Point(814, 625);
+            this.btnBroadcast.Name = "btnBroadcast";
+            this.btnBroadcast.Size = new System.Drawing.Size(93, 28);
+            this.btnBroadcast.TabIndex = 43;
+            this.btnBroadcast.Text = "Broadcast To";
+            this.btnBroadcast.UseVisualStyleBackColor = true;
+            this.btnBroadcast.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // btnUnLink
+            // btnStopBroadcast
             // 
-            this.btnUnLink.Location = new System.Drawing.Point(427, 657);
-            this.btnUnLink.Name = "btnUnLink";
-            this.btnUnLink.Size = new System.Drawing.Size(75, 23);
-            this.btnUnLink.TabIndex = 44;
-            this.btnUnLink.Text = "Unlink";
-            this.btnUnLink.UseVisualStyleBackColor = true;
-            this.btnUnLink.Click += new System.EventHandler(this.btnUnLink_Click);
+            this.btnStopBroadcast.Location = new System.Drawing.Point(814, 659);
+            this.btnStopBroadcast.Name = "btnStopBroadcast";
+            this.btnStopBroadcast.Size = new System.Drawing.Size(93, 29);
+            this.btnStopBroadcast.TabIndex = 44;
+            this.btnStopBroadcast.Text = "Stop Broadcast";
+            this.btnStopBroadcast.UseVisualStyleBackColor = true;
+            this.btnStopBroadcast.Click += new System.EventHandler(this.btnUnLink_Click);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(706, 521);
+            this.label19.Location = new System.Drawing.Point(706, 513);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(75, 13);
             this.label19.TabIndex = 45;
@@ -549,7 +549,7 @@
             // 
             this.lblWSState.AutoSize = true;
             this.lblWSState.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWSState.Location = new System.Drawing.Point(780, 519);
+            this.lblWSState.Location = new System.Drawing.Point(780, 511);
             this.lblWSState.Name = "lblWSState";
             this.lblWSState.Size = new System.Drawing.Size(127, 16);
             this.lblWSState.TabIndex = 46;
@@ -559,11 +559,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(938, 943);
+            this.ClientSize = new System.Drawing.Size(938, 1049);
             this.Controls.Add(this.lblWSState);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.btnUnLink);
-            this.Controls.Add(this.btnLink);
+            this.Controls.Add(this.btnStopBroadcast);
+            this.Controls.Add(this.btnBroadcast);
             this.Controls.Add(this.cmbAddContext);
             this.Controls.Add(this.btnClearContext);
             this.Controls.Add(this.btnDelContext);
@@ -663,8 +663,8 @@
         private System.Windows.Forms.Button btnDelContext;
         private System.Windows.Forms.Button btnClearContext;
         private System.Windows.Forms.ComboBox cmbAddContext;
-        private System.Windows.Forms.Button btnLink;
-        private System.Windows.Forms.Button btnUnLink;
+        private System.Windows.Forms.Button btnBroadcast;
+        private System.Windows.Forms.Button btnStopBroadcast;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lblWSState;
     }
