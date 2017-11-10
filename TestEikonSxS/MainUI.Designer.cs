@@ -528,7 +528,7 @@
             // 
             // btnUnLink
             // 
-            this.btnUnLink.Location = new System.Drawing.Point(427, 637);
+            this.btnUnLink.Location = new System.Drawing.Point(427, 657);
             this.btnUnLink.Name = "btnUnLink";
             this.btnUnLink.Size = new System.Drawing.Size(75, 23);
             this.btnUnLink.TabIndex = 44;
