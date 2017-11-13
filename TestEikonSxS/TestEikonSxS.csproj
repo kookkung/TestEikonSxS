@@ -64,10 +64,19 @@
     <Compile Include="MainUI.Designer.cs">
       <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModifyContextUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModifyContextUI.Designer.cs">
+      <DependentUpon>ModifyContextUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModifyContextUI.resx">
+      <DependentUpon>ModifyContextUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

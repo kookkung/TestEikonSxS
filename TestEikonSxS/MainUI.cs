@@ -342,5 +342,42 @@ namespace TestEikonSxS
 
             bndEikonApps.ResetBindings(false);
         }
+
+        private void btnModifyContext_Click(object sender, EventArgs e)
+        {
+            EikonApp myApp;
+
+            ModifyContextUI formModContext = new ModifyContextUI();
+
+            // Scroll through datagridview and perform ulink on each selected rows
+            foreach (DataGridViewRow item in dgvAppList.SelectedRows)
+            {
+                myApp = (EikonApp)item.DataBoundItem;
+                
+                // Found our selected App,  set this App to the Modify Context UI
+                formModContext.EIKONAPP = myApp;
+
+                // Launch Modify Context UI
+                formModContext.ShowDialog();
+
+                if (formModContext.DialogResult == DialogResult.OK)
+                {
+                    // User clicks OK, proceed to change the Ric Contents
+
+                    // Change ONLY if this app broadcasts to Eikon
+                    if (myApp.BROADCASTTO == true)
+                    {
+
+                        eikon.DoChangeContext(myApp);
+
+                    }
+
+                }
+            }             
+            
+
+            // Update UI
+            bndEikonApps.ResetBindings(false);
+        }
     }
 }

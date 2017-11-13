@@ -67,8 +67,21 @@ namespace EikonSxSClassLibrary
 
     public class JsonLaunchApp : JsonApp
     {
-        public string command { get; } = "launch";
+        public string command { get; } = "launch";        
+    }
 
+    /*public class JsonChangeContext : JsonApp
+    {
+        public string command { get; } = "contextChanged";
+
+    }*/
+    public class JsonChangeContext
+    {
+        public string command { get; } = "contextChanged";
+
+        public string sessionToken { get; set; } = "";
+        public string instanceId { get; set; } = "";
+        public JsonContext context { get; set; } = new JsonContext();
     }
 
 

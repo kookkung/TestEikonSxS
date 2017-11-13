@@ -144,6 +144,59 @@ namespace EikonSxSClassLibrary
             return strResponse;
         }
 
+        public string DoChangeContext(EikonApp myApp)
+        {
+            string strResponse = string.Empty;
+
+            restClient.httpMethod = httpMethod.POST;
+            restClient.URI = URL_SXS;
+
+            JsonChangeContext jContextChange = new JsonChangeContext();
+            jContextChange.sessionToken = SESSIONTOKEN;
+            jContextChange.instanceId = myApp.INSTANCEID;
+            jContextChange.context = myApp.APP.context;
+
+            
+
+            // Add RIC (context) to our JSon object
+            /*foreach (string str in myApp.APP.)
+            {
+                jLaunchApp.context.entities.Add(new JsonEntities(str));
+            }*/
+
+
+            // Serialize JSonLaunchApp object to create JSON data for POST Request
+            string strPostData = JsonConvert.SerializeObject(jContextChange);
+
+            DebugOutput(strPostData);
+
+            strResponse = restClient.PostRequest(strPostData);
+
+            // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
+            try
+            {
+                var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
+
+                if (myObject.isSuccess == true)
+                {
+                    DebugOutput("Context Changed Success: " + myObject.instanceId);
+                    //EIKONAPP.Add(new EikonApp(myObject.instanceId.ToString(), jLaunchApp));
+                }
+                else
+                {
+                    DebugOutput("ERROR Changing Context");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                strResponse = ex.Message.ToString();
+            }
+            
+            return strResponse;
+        }
+
 
         public string ProcessIncomingWSMessage(string strMessage)
         {

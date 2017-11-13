@@ -75,6 +75,7 @@
             this.btnStopBroadcast = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.lblWSState = new System.Windows.Forms.Label();
+            this.btnModifyContext = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -342,6 +343,7 @@
             this.dgvAppList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvAppList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAppList.Location = new System.Drawing.Point(31, 570);
+            this.dgvAppList.MultiSelect = false;
             this.dgvAppList.Name = "dgvAppList";
             this.dgvAppList.ReadOnly = true;
             this.dgvAppList.Size = new System.Drawing.Size(767, 186);
@@ -555,11 +557,22 @@
             this.lblWSState.TabIndex = 46;
             this.lblWSState.Text = "DISCONNECTED";
             // 
+            // btnModifyContext
+            // 
+            this.btnModifyContext.Location = new System.Drawing.Point(814, 584);
+            this.btnModifyContext.Name = "btnModifyContext";
+            this.btnModifyContext.Size = new System.Drawing.Size(93, 23);
+            this.btnModifyContext.TabIndex = 47;
+            this.btnModifyContext.Text = "Modify RICs";
+            this.btnModifyContext.UseVisualStyleBackColor = true;
+            this.btnModifyContext.Click += new System.EventHandler(this.btnModifyContext_Click);
+            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 1049);
+            this.Controls.Add(this.btnModifyContext);
             this.Controls.Add(this.lblWSState);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.btnStopBroadcast);
@@ -667,6 +680,7 @@
         private System.Windows.Forms.Button btnStopBroadcast;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lblWSState;
+        private System.Windows.Forms.Button btnModifyContext;
     }
 }
 
