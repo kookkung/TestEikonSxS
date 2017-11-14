@@ -21,6 +21,12 @@ namespace EikonSxSClassLibrary
         HIDE                // Hide
     }
 
+    public enum activeState
+    {
+        ACTIVE,
+        INACTIVE
+    }
+
     public class EikonSxS
     {
         public int PORT { get; set; } = 9000;
@@ -429,6 +435,114 @@ namespace EikonSxSClassLibrary
 
 
         }
+
+
+        public string DoShowFeedbackForLinking(showFeedbackMethod showMethod, string strId)
+        {
+            string strResponse = "";
+            JsonShowFeedbackForLinking jShowFeedback = new JsonShowFeedbackForLinking();
+
+            if (showMethod == showFeedbackMethod.SHOW)
+            {
+                jShowFeedback.command = "showFeedbackForLinking";
+
+            } else
+            {
+                jShowFeedback.command = "hideFeedbackForLinking";
+
+            }
+
+            jShowFeedback.sessionToken = SESSIONTOKEN;
+            jShowFeedback.instanceId = strId;
+
+
+            // Serialize JSonLaunchApp object to create JSON data for POST Request
+            string strPostData = JsonConvert.SerializeObject(jShowFeedback);
+
+            DebugOutput(strPostData);
+
+            strResponse = restClient.PostRequest(strPostData);
+
+            // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
+            try
+            {
+                var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
+
+                if (myObject.isSuccess == true)
+                {
+                    //Show/Hide Feedback  process Successful               
+
+                
+                }
+                else
+                {
+                    DebugOutput("ERROR in Show/Hide Feedback for Linking");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                strResponse = ex.Message.ToString();
+            }
+
+
+
+            return strResponse;
+        }
+
+        // Set Active State,  stil doesn't know the exact result  so  no button on UI to do this yet...
+        public string DoSetActiveState(activeState aState)
+        {
+            string strResponse = "";
+
+            JsonSetActiveState jSetActiveState = new JsonSetActiveState();
+
+            if (aState == activeState.ACTIVE)
+            {
+                jSetActiveState.isActive = true;
+            } else
+            {
+                jSetActiveState.isActive = false;
+            }
+
+            jSetActiveState.sessionToken = SESSIONTOKEN;
+
+
+            // Serialize JSonLaunchApp object to create JSON data for POST Request
+            string strPostData = JsonConvert.SerializeObject(jSetActiveState);
+
+            DebugOutput(strPostData);
+
+            strResponse = restClient.PostRequest(strPostData);
+
+            // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
+            try
+            {
+                var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
+
+                if (myObject.isSuccess == true)
+                {
+                    //Set Active state Successful          
+                    DebugOutput("SET ACTIVE STATE SUCCESSFULL,  ACTIVESTATE:" + jSetActiveState.isActive);
+
+                }
+                else
+                {
+                    DebugOutput("ERROR in Show/Hide Feedback for Linking");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                strResponse = ex.Message.ToString();
+            }
+
+
+            return strResponse;
+        }
+
 
     }
 

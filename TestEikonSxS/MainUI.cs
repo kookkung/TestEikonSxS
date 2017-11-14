@@ -11,6 +11,7 @@ using EikonSxSClassLibrary;
 using Newtonsoft.Json;
 using WebSocket4Net;
 using SuperSocket.ClientEngine;
+using System.Timers;
 
 
 namespace TestEikonSxS
@@ -22,6 +23,8 @@ namespace TestEikonSxS
         BindingSource bndEikonApps = new BindingSource();
 
         WebSocket websocket;
+
+        System.Timers.Timer timeShowFeedback = new System.Timers.Timer(1000);
 
 
         // This delegate enables asynchronous calls for setting
@@ -380,12 +383,41 @@ namespace TestEikonSxS
         private void dgvAppList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             DebugOutput("Cell Content DBL CLICKED");
+            EikonApp myApp;
 
             // Double click content in the Cell,  show Feedback on Linked object on Eikon App
-            //DataGridView test = dgvAppList.SelectedCells;
+            // Scroll through datagridview and perform ulink on each selected rows
+            foreach (DataGridViewRow item in dgvAppList.SelectedRows)
+            {
+                myApp = (EikonApp)item.DataBoundItem;
 
+                // Found our selected App, if this App Broadcasts to Eikon App, Perform ShowLinkingApp Highlight 
+                if (myApp.BROADCASTTO == true)
+                {
+                    //eikon.Do
+                    eikon.DoShowFeedbackForLinking(showFeedbackMethod.SHOW, myApp.INSTANCEID);
 
+                    // Start timer , when timer reached -> Hide Feedback to this Instance ID                    
+                    timeShowFeedback.Elapsed += delegate { MyElapsedMethod(myApp.INSTANCEID); };
+                    // Hook up the Elapsed event for the timer. 
+                    timeShowFeedback.AutoReset = true;
+                    timeShowFeedback.Enabled = true;
+
+                }
+
+            }
+        }
+
+        void MyElapsedMethod(string theString)
+        {
+
+            //DebugOutput("TIMER 2000 REACHED");
+
+            // Timer reached,  hide feed back for Linking
+            timeShowFeedback.Enabled = false;
+            eikon.DoShowFeedbackForLinking(showFeedbackMethod.HIDE, theString);
 
         }
+
     }
 }

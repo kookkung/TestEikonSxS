@@ -523,7 +523,7 @@
             // 
             // btnBroadcast
             // 
-            this.btnBroadcast.Location = new System.Drawing.Point(814, 570);
+            this.btnBroadcast.Location = new System.Drawing.Point(833, 570);
             this.btnBroadcast.Name = "btnBroadcast";
             this.btnBroadcast.Size = new System.Drawing.Size(93, 28);
             this.btnBroadcast.TabIndex = 43;
@@ -533,7 +533,7 @@
             // 
             // btnStopBroadcast
             // 
-            this.btnStopBroadcast.Location = new System.Drawing.Point(814, 604);
+            this.btnStopBroadcast.Location = new System.Drawing.Point(833, 604);
             this.btnStopBroadcast.Name = "btnStopBroadcast";
             this.btnStopBroadcast.Size = new System.Drawing.Size(93, 29);
             this.btnStopBroadcast.TabIndex = 44;
