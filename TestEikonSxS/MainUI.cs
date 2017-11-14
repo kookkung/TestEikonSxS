@@ -59,9 +59,10 @@ namespace TestEikonSxS
             
             txbWSURL.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=<session token>";
 
-            
+
 
             //ws.OnMessage += (test, a) => DebugOutput("Websocket OnMessage: " + a.Data);
+            btnModifyContext.Enabled = false;
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -209,17 +210,26 @@ namespace TestEikonSxS
                 
                 // Add MessageReceived to the listbox
                 lsbWSEvents.Items.Add(text);
-                
+
 
                 // Set Label to show the current Websocket State
-                if (websocket != null){
+                if (websocket != null)
+                {
 
                     if (websocket.State == WebSocketState.Open)
+                    {
                         lblWSState.Text = "CONNECTED";
+                    }
                     else if (websocket.State == WebSocketState.Closed)
+                    {
+                        // Socket state changed to Closed, Reset All the Link states to Unlinked in all Eikon Apps
+                        eikon.ResetLinkState();
                         lblWSState.Text = "DISCONNECTED";
+                    }
                     else if (websocket.State == WebSocketState.Connecting)
+                    {
                         lblWSState.Text = "CONECTTING";
+                    }
                     else lblWSState.Text = "UNKNOWN";                            
 
                 }
@@ -327,6 +337,9 @@ namespace TestEikonSxS
             }
 
             bndEikonApps.ResetBindings(false);
+            
+            // Enable  New Ric Broadcast button, as we assume when user click this Link button , he does set Broadcast at least 1 time
+            btnModifyContext.Enabled = true;
         }
 
         private void btnUnLink_Click(object sender, EventArgs e)
@@ -345,39 +358,34 @@ namespace TestEikonSxS
 
         private void btnModifyContext_Click(object sender, EventArgs e)
         {
-            EikonApp myApp;
+            // just Broadcast Ric if user enter a Ric in Textbox
+            if (!string.IsNullOrEmpty(txbNewContext.Text)) {
 
-            ModifyContextUI formModContext = new ModifyContextUI();
+                eikon.DoChangeContext(txbNewContext.Text);
 
-            // Scroll through datagridview and perform ulink on each selected rows
-            foreach (DataGridViewRow item in dgvAppList.SelectedRows)
-            {
-                myApp = (EikonApp)item.DataBoundItem;
-                
-                // Found our selected App,  set this App to the Modify Context UI
-                formModContext.EIKONAPP = myApp;
-
-                // Launch Modify Context UI
-                formModContext.ShowDialog();
-
-                if (formModContext.DialogResult == DialogResult.OK)
-                {
-                    // User clicks OK, proceed to change the Ric Contents
-
-                    // Change ONLY if this app broadcasts to Eikon
-                    if (myApp.BROADCASTTO == true)
-                    {
-
-                        eikon.DoChangeContext(myApp);
-
-                    }
-
-                }
-            }             
-            
+            } 
 
             // Update UI
             bndEikonApps.ResetBindings(false);
+        }
+
+        private void txbNewContext_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnModifyContext_Click(sender, e);
+            }
+        }
+
+        private void dgvAppList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DebugOutput("Cell Content DBL CLICKED");
+
+            // Double click content in the Cell,  show Feedback on Linked object on Eikon App
+            //DataGridView test = dgvAppList.SelectedCells;
+
+
+
         }
     }
 }

@@ -76,6 +76,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.lblWSState = new System.Windows.Forms.Label();
             this.btnModifyContext = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txbNewContext = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -346,8 +348,9 @@
             this.dgvAppList.MultiSelect = false;
             this.dgvAppList.Name = "dgvAppList";
             this.dgvAppList.ReadOnly = true;
-            this.dgvAppList.Size = new System.Drawing.Size(767, 186);
+            this.dgvAppList.Size = new System.Drawing.Size(716, 186);
             this.dgvAppList.TabIndex = 27;
+            this.dgvAppList.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppList_CellContentDoubleClick);
             // 
             // label15
             // 
@@ -520,17 +523,17 @@
             // 
             // btnBroadcast
             // 
-            this.btnBroadcast.Location = new System.Drawing.Point(814, 625);
+            this.btnBroadcast.Location = new System.Drawing.Point(814, 570);
             this.btnBroadcast.Name = "btnBroadcast";
             this.btnBroadcast.Size = new System.Drawing.Size(93, 28);
             this.btnBroadcast.TabIndex = 43;
-            this.btnBroadcast.Text = "Broadcast To";
+            this.btnBroadcast.Text = "Set Broadcast";
             this.btnBroadcast.UseVisualStyleBackColor = true;
             this.btnBroadcast.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnStopBroadcast
             // 
-            this.btnStopBroadcast.Location = new System.Drawing.Point(814, 659);
+            this.btnStopBroadcast.Location = new System.Drawing.Point(814, 604);
             this.btnStopBroadcast.Name = "btnStopBroadcast";
             this.btnStopBroadcast.Size = new System.Drawing.Size(93, 29);
             this.btnStopBroadcast.TabIndex = 44;
@@ -559,19 +562,38 @@
             // 
             // btnModifyContext
             // 
-            this.btnModifyContext.Location = new System.Drawing.Point(814, 584);
+            this.btnModifyContext.Location = new System.Drawing.Point(814, 733);
             this.btnModifyContext.Name = "btnModifyContext";
             this.btnModifyContext.Size = new System.Drawing.Size(93, 23);
             this.btnModifyContext.TabIndex = 47;
-            this.btnModifyContext.Text = "Modify RICs";
+            this.btnModifyContext.Text = "Modify RIC";
             this.btnModifyContext.UseVisualStyleBackColor = true;
             this.btnModifyContext.Click += new System.EventHandler(this.btnModifyContext_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(796, 691);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(111, 13);
+            this.label20.TabIndex = 48;
+            this.label20.Text = "New Ric to Broadcast";
+            // 
+            // txbNewContext
+            // 
+            this.txbNewContext.Location = new System.Drawing.Point(799, 707);
+            this.txbNewContext.Name = "txbNewContext";
+            this.txbNewContext.Size = new System.Drawing.Size(108, 20);
+            this.txbNewContext.TabIndex = 49;
+            this.txbNewContext.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txbNewContext_KeyUp);
             // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 1049);
+            this.Controls.Add(this.txbNewContext);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.btnModifyContext);
             this.Controls.Add(this.lblWSState);
             this.Controls.Add(this.label19);
@@ -681,6 +703,8 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lblWSState;
         private System.Windows.Forms.Button btnModifyContext;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txbNewContext;
     }
 }
 

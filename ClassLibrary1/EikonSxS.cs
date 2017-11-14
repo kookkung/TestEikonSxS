@@ -9,10 +9,16 @@ namespace EikonSxSClassLibrary
 {
     public enum linkMethod
     {
-        BROADCAST,
-        STOPBROADCAST,
-        RECEIVED,
-        STOPRECEIVED
+        BROADCAST,          // broadcast to Eikon APp
+        STOPBROADCAST,      // stop broadcast to Eikon App
+        RECEIVED,           // Receive broadcast from Eikon App
+        STOPRECEIVED        // Stop receive broadcast from Eikon App
+    }
+
+    public enum showFeedbackMethod
+    {
+        SHOW,               // Show Feedback for Linking on Eikon App
+        HIDE                // Hide
     }
 
     public class EikonSxS
@@ -144,7 +150,7 @@ namespace EikonSxSClassLibrary
             return strResponse;
         }
 
-        public string DoChangeContext(EikonApp myApp)
+        public string DoChangeContext(string strNewRic)
         {
             string strResponse = string.Empty;
 
@@ -153,16 +159,9 @@ namespace EikonSxSClassLibrary
 
             JsonChangeContext jContextChange = new JsonChangeContext();
             jContextChange.sessionToken = SESSIONTOKEN;
-            jContextChange.instanceId = myApp.INSTANCEID;
-            jContextChange.context = myApp.APP.context;
+            //jContextChange.instanceId = INSTANCEID;
+            jContextChange.context.entities.Add(new JsonEntities(strNewRic));
 
-            
-
-            // Add RIC (context) to our JSon object
-            /*foreach (string str in myApp.APP.)
-            {
-                jLaunchApp.context.entities.Add(new JsonEntities(str));
-            }*/
 
 
             // Serialize JSonLaunchApp object to create JSON data for POST Request
@@ -180,7 +179,20 @@ namespace EikonSxSClassLibrary
                 if (myObject.isSuccess == true)
                 {
                     DebugOutput("Context Changed Success: " + myObject.instanceId);
-                    //EIKONAPP.Add(new EikonApp(myObject.instanceId.ToString(), jLaunchApp));
+
+                    // Context changed success, scroll through list to change the Ricname of each App
+                    foreach (EikonApp myApp in EIKONAPP)
+                    {
+                        if (myApp.BROADCASTTO == true){
+
+                            // clear current entities list & add a new one with new Ric name that we made the broadcast
+                            myApp.APP.context.entities.Clear();
+                            myApp.APP.context.entities.Add(new JsonEntities(strNewRic));
+
+                        }
+
+                    }
+                    
                 }
                 else
                 {
@@ -196,6 +208,9 @@ namespace EikonSxSClassLibrary
             
             return strResponse;
         }
+
+
+    
 
 
         public string ProcessIncomingWSMessage(string strMessage)
@@ -401,6 +416,18 @@ namespace EikonSxSClassLibrary
 
 
             return strResponse;
+        }
+
+        // Clear Link State to unlinked on all Eikon App
+        public void ResetLinkState()
+        {
+            foreach (EikonApp myApp in EIKONAPP)
+            {
+                myApp.BROADCASTTO = false;
+                myApp.RECEIVEDFROM = false;
+            }
+
+
         }
 
     }
