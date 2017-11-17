@@ -64,7 +64,7 @@ namespace EikonSxSClassLibrary
 
         }
 
-        public string DoHandshake()
+        public string DoHandshake(out string outPostData)
         {
             string strResponse = string.Empty;
 
@@ -72,9 +72,12 @@ namespace EikonSxSClassLibrary
             restClient.URI = URL_SXS;            
                         
             JsonHandshake jHandshake = new JsonHandshake(PRODUCT_ID, APIKEY);            
-            string strPostData = JsonConvert.SerializeObject(jHandshake);
+            string strPostData = JsonConvert.SerializeObject(jHandshake, Formatting.Indented);
+            // return generated PostData to out string
+            outPostData = strPostData;
             
-            strResponse = restClient.PostRequest(strPostData);
+            strResponse = restClient.PostRequest(strPostData);            
+                        
 
             // Using Newtonsoft.Json library to do JSON Deserialization Object
             try
@@ -98,7 +101,7 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
 
 
@@ -106,7 +109,7 @@ namespace EikonSxSClassLibrary
         }
 
 
-        public string DoLaunchApp(string appName, List<string> context)
+        public string DoLaunchApp(string appName, List<string> context, out string stroutPostData)
         {
             string strResponse = string.Empty;
 
@@ -125,7 +128,9 @@ namespace EikonSxSClassLibrary
             
 
             // Serialize JSonLaunchApp object to create JSON data for POST Request
-            string strPostData = JsonConvert.SerializeObject(jLaunchApp);
+            string strPostData = JsonConvert.SerializeObject(jLaunchApp, Formatting.Indented);
+
+            stroutPostData = strPostData;
 
             DebugOutput(strPostData);            
 
@@ -150,13 +155,13 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
 
             return strResponse;
         }
 
-        public string DoChangeContext(string strNewRic)
+        public string DoChangeContext(string strNewRic, out string stroutPostData)
         {
             string strResponse = string.Empty;
 
@@ -171,7 +176,9 @@ namespace EikonSxSClassLibrary
 
 
             // Serialize JSonLaunchApp object to create JSON data for POST Request
-            string strPostData = JsonConvert.SerializeObject(jContextChange);
+            string strPostData = JsonConvert.SerializeObject(jContextChange, Formatting.Indented);
+
+            stroutPostData = strPostData;
 
             DebugOutput(strPostData);
 
@@ -209,7 +216,7 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
             
             return strResponse;
@@ -360,7 +367,7 @@ namespace EikonSxSClassLibrary
         }   
 
 
-        public string BroadcastApp(linkMethod lnkMethod, EikonApp myApp)
+        public string BroadcastApp(linkMethod lnkMethod, EikonApp myApp, out string stroutPostData)
         {
             string strResponse = "";
 
@@ -378,7 +385,9 @@ namespace EikonSxSClassLibrary
 
 
             // Serialize JSonLaunchApp object to create JSON data for POST Request
-            string strPostData = JsonConvert.SerializeObject(jLinkApp);
+            string strPostData = JsonConvert.SerializeObject(jLinkApp, Formatting.Indented);
+
+            stroutPostData = strPostData;
 
             DebugOutput(strPostData);
 
@@ -417,7 +426,7 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
 
 
@@ -437,7 +446,7 @@ namespace EikonSxSClassLibrary
         }
 
 
-        public string DoShowFeedbackForLinking(showFeedbackMethod showMethod, string strId)
+        public string DoShowFeedbackForLinking(showFeedbackMethod showMethod, string strId, out string stroutPostData)
         {
             string strResponse = "";
             JsonShowFeedbackForLinking jShowFeedback = new JsonShowFeedbackForLinking();
@@ -457,7 +466,9 @@ namespace EikonSxSClassLibrary
 
 
             // Serialize JSonLaunchApp object to create JSON data for POST Request
-            string strPostData = JsonConvert.SerializeObject(jShowFeedback);
+            string strPostData = JsonConvert.SerializeObject(jShowFeedback, Formatting.Indented);
+
+            stroutPostData = strPostData;
 
             DebugOutput(strPostData);
 
@@ -483,7 +494,7 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
 
 
@@ -536,7 +547,7 @@ namespace EikonSxSClassLibrary
             catch (Exception ex)
             {
 
-                strResponse = ex.Message.ToString();
+                //strResponse = ex.Message.ToString();
             }
 
 

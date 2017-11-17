@@ -42,7 +42,7 @@ namespace TestEikonSxS
 
         private void MainUI_Load(object sender, EventArgs e)
         {
-            txbResponse.Text = "";
+            txbPingResponse.Text = "";
             txbURL.Text = "http://127.0.0.1:9000/ping";            
             lblResult.Text = "";
 
@@ -72,15 +72,15 @@ namespace TestEikonSxS
         {
        
             eikon.URL_PING = txbURL.Text;
-            txbResponse.Text = eikon.DoPingTest();
+            txbPingResponse.Text = eikon.DoPingTest();
 
             try
             {
-                int nResultPort = int.Parse(txbResponse.Text);
+                int nResultPort = int.Parse(txbPingResponse.Text);
 
                 if (nResultPort == eikon.PORT)
                 {
-                    lblResult.Text = "SUCCESS at port " + txbResponse.Text;
+                    lblResult.Text = "SUCCESS at port " + txbPingResponse.Text;
 
                 } else
                 {
@@ -103,9 +103,9 @@ namespace TestEikonSxS
             try
             {
                 System.Diagnostics.Debug.Write(strDebugText + Environment.NewLine);
-                txbDebug.Text = txbDebug.Text + strDebugText + Environment.NewLine;
+                /*txbDebug.Text = txbDebug.Text + strDebugText + Environment.NewLine;
                 txbDebug.SelectionStart = txbDebug.TextLength;
-                txbDebug.ScrollToCaret();
+                txbDebug.ScrollToCaret();*/
             }
             catch (Exception ex)
             {
@@ -119,11 +119,13 @@ namespace TestEikonSxS
         {  
 
             string strResponse = "";
+            string strPostData = "";
 
             eikon.PRODUCT_ID = txbProductID.Text;
             eikon.APIKEY = txbAPIKey.Text;
-            strResponse = eikon.DoHandshake();
+            strResponse = eikon.DoHandshake(out strPostData);
 
+            txbHandshakePOST.Text = strPostData;
             txbHandshakeResponse.Text = strResponse;
 
             if (eikon.ISHANDSHAKESUCCESS)
@@ -131,11 +133,14 @@ namespace TestEikonSxS
                 txbSessionToken.Text = eikon.SESSIONTOKEN;
                 txbWSURL.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=" + eikon.SESSIONTOKEN;
                 lblHandshakeResult.Text = "SUCCESS";
+                lblHandshakeResultMainUI.Text = "SUCCESS - Ready to launch Eikon Apps";          
+
             }
             else
             {
                 txbSessionToken.Text = "";
                 lblHandshakeResult.Text = "FAILED";
+                lblHandshakeResultMainUI.Text = "FAILED - please click Send Hanshake button, or go to Config Page";
             }    
         }
 
@@ -143,6 +148,8 @@ namespace TestEikonSxS
 
         private void btnLaunchApp_Click(object sender, EventArgs e)
         {
+            string strPostData = "";
+
             List<string> context = new List<string>();
 
             // Create list of Rics to launch along with Eikon App
@@ -151,8 +158,10 @@ namespace TestEikonSxS
                 context.Add(str);
             }
                 
-            txbLaunchAppResponse.Text = eikon.DoLaunchApp(cmbAppName.Text, context);
+            txbResponse.Text = eikon.DoLaunchApp(cmbAppName.Text, context, out strPostData);
             //txbLaunchAppResponse.Text = eikon.DoLaunchApp(cmbAppName.Text);
+            txbPostData.Text = strPostData;
+
 
             DebugOutput(lsbContext.Items.ToString());
 
@@ -194,7 +203,7 @@ namespace TestEikonSxS
             //DebugOutput(Environment.NewLine + "WEB SOCKET OPENED, sender = " + sender.ToString() + " Event = " + e.ToString() + Environment.NewLine);
 
             this.ProcessMessageReceived("WEB SOCKET OPENED");
-            websocket.Send("Hello World!");
+            //websocket.Send("Hello World!");
         }
 
         private void ProcessMessageReceived(string text)
@@ -222,16 +231,19 @@ namespace TestEikonSxS
                     if (websocket.State == WebSocketState.Open)
                     {
                         lblWSState.Text = "CONNECTED";
+                        lblWSStateMainUI.Text = "CONNECTED - ready for Linking / Exchange Context";
                     }
                     else if (websocket.State == WebSocketState.Closed)
                     {
                         // Socket state changed to Closed, Reset All the Link states to Unlinked in all Eikon Apps
                         eikon.ResetLinkState();
                         lblWSState.Text = "DISCONNECTED";
+                        lblWSStateMainUI.Text = "DISCONNECTED - please click Connect button, or go to Config Page";
                     }
                     else if (websocket.State == WebSocketState.Connecting)
                     {
-                        lblWSState.Text = "CONECTTING";
+                        lblWSState.Text = "CONNECTING";
+                        //lblWSStateMainUI.Text = "CONNECTING";
                     }
                     else lblWSState.Text = "UNKNOWN";                            
 
@@ -330,12 +342,18 @@ namespace TestEikonSxS
 
         private void btnLink_Click(object sender, EventArgs e)
         {
+            string strPostData = "";
+            string strResponse = "";
+
             // Scroll through datagridview and perform link on each selected rows
             foreach (DataGridViewRow item in dgvAppList.SelectedRows)
             {
                 EikonApp myApp = (EikonApp)item.DataBoundItem;
 
-                eikon.BroadcastApp(linkMethod.BROADCAST, myApp);
+                strResponse = eikon.BroadcastApp(linkMethod.BROADCAST, myApp, out strPostData);
+
+                txbPostData.Text = strPostData;
+                txbResponse.Text = strResponse;
                 
             }
 
@@ -347,13 +365,18 @@ namespace TestEikonSxS
 
         private void btnUnLink_Click(object sender, EventArgs e)
         {
+            string strPostData = "";
+            string strResponse = "";
+
             // Scroll through datagridview and perform ulink on each selected rows
             foreach (DataGridViewRow item in dgvAppList.SelectedRows)
             {
                 EikonApp myApp = (EikonApp)item.DataBoundItem;
 
-                eikon.BroadcastApp(linkMethod.STOPBROADCAST, myApp);
+                strResponse = eikon.BroadcastApp(linkMethod.STOPBROADCAST, myApp, out strPostData);
 
+                txbPostData.Text = strPostData;
+                txbResponse.Text = strResponse;
             }
 
             bndEikonApps.ResetBindings(false);
@@ -361,10 +384,16 @@ namespace TestEikonSxS
 
         private void btnModifyContext_Click(object sender, EventArgs e)
         {
+            string strPostData = "";
+            string strResponse = "";
+
             // just Broadcast Ric if user enter a Ric in Textbox
             if (!string.IsNullOrEmpty(txbNewContext.Text)) {
 
-                eikon.DoChangeContext(txbNewContext.Text);
+                strResponse = eikon.DoChangeContext(txbNewContext.Text, out strPostData);
+
+                txbPostData.Text = strPostData;
+                txbResponse.Text = strResponse;
 
             } 
 
@@ -395,7 +424,13 @@ namespace TestEikonSxS
                 if (myApp.BROADCASTTO == true)
                 {
                     //eikon.Do
-                    eikon.DoShowFeedbackForLinking(showFeedbackMethod.SHOW, myApp.INSTANCEID);
+                    string strPostData = "";
+                    string strResponse = "";
+
+                    strResponse = eikon.DoShowFeedbackForLinking(showFeedbackMethod.SHOW, myApp.INSTANCEID, out strPostData);
+
+                    txbResponse.Text = strResponse;
+                    txbPostData.Text = strPostData;
 
                     // Start timer , when timer reached -> Hide Feedback to this Instance ID                    
                     timeShowFeedback.Elapsed += delegate { MyElapsedMethod(myApp.INSTANCEID); };
@@ -408,16 +443,33 @@ namespace TestEikonSxS
             }
         }
 
-        void MyElapsedMethod(string theString)
+        void MyElapsedMethod(string strInstanceId)
         {
 
             //DebugOutput("TIMER 2000 REACHED");
 
             // Timer reached,  hide feed back for Linking
+            string strPostData = "";
+            //string strResponse = "";
+
             timeShowFeedback.Enabled = false;
-            eikon.DoShowFeedbackForLinking(showFeedbackMethod.HIDE, theString);
+            eikon.DoShowFeedbackForLinking(showFeedbackMethod.HIDE, strInstanceId, out strPostData);
+
+            //txbResponse.Text = strResponse;
+            //txbPostData.Text = strPostData;
 
         }
 
+        private void btnSaveConfig_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmResult = MessageBox.Show("Save current configuration?",
+                                     "Save Confirmation",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                // If 'Yes' is selected, Save the Configuration
+
+            }
+        }
     }
 }
