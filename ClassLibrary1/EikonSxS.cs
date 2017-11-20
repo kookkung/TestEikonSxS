@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EikonSxSClassLibrary
 {
@@ -54,7 +55,7 @@ namespace EikonSxSClassLibrary
         public string DoPingTest()
         {
             string strResponse = "";
-
+            
             restClient.URI = URL_PING;
             restClient.httpMethod = httpMethod.GET;
 
@@ -76,12 +77,16 @@ namespace EikonSxSClassLibrary
             // return generated PostData to out string
             outPostData = strPostData;
             
-            strResponse = restClient.PostRequest(strPostData);            
+            strResponse = restClient.PostRequest(strPostData);     
                         
 
             // Using Newtonsoft.Json library to do JSON Deserialization Object
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
                 
                 if (myObject.isSuccess == true)
@@ -98,7 +103,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();
@@ -135,10 +140,14 @@ namespace EikonSxSClassLibrary
             DebugOutput(strPostData);            
 
             strResponse = restClient.PostRequest(strPostData);
+                       
 
             // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
 
                 if (myObject.isSuccess == true)
@@ -152,7 +161,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();
@@ -184,9 +193,14 @@ namespace EikonSxSClassLibrary
 
             strResponse = restClient.PostRequest(strPostData);
 
+            
+
             // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
 
                 if (myObject.isSuccess == true)
@@ -213,7 +227,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();
@@ -393,9 +407,14 @@ namespace EikonSxSClassLibrary
 
             strResponse = restClient.PostRequest(strPostData);
 
+            
+
             // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
 
                 if (myObject.isSuccess == true)
@@ -423,7 +442,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();
@@ -474,9 +493,14 @@ namespace EikonSxSClassLibrary
 
             strResponse = restClient.PostRequest(strPostData);
 
+            
+
             // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
 
                 if (myObject.isSuccess == true)
@@ -491,7 +515,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();
@@ -527,9 +551,14 @@ namespace EikonSxSClassLibrary
 
             strResponse = restClient.PostRequest(strPostData);
 
+            
+
             // Using Newtonsoft.Json library to do JSON Deserialization Object from Web Response
             try
             {
+                // Beautify Json response
+                strResponse = JValue.Parse(strResponse).ToString(Formatting.Indented);
+
                 var myObject = JsonConvert.DeserializeObject<dynamic>(strResponse);
 
                 if (myObject.isSuccess == true)
@@ -544,7 +573,7 @@ namespace EikonSxSClassLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //strResponse = ex.Message.ToString();

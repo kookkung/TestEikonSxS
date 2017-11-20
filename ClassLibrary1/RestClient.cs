@@ -91,7 +91,7 @@ namespace EikonSxSClassLibrary
                 ASCIIEncoding encoding = new ASCIIEncoding();
                 byte[] data = encoding.GetBytes(postData);
 
-                WebRequest request = WebRequest.Create("http://127.0.0.1:9000/sxs/v1/");
+                WebRequest request = WebRequest.Create(URI);
                 request.Method = "POST";
                 //request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentType = "application/json";

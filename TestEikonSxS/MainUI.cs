@@ -42,13 +42,21 @@ namespace TestEikonSxS
 
         private void MainUI_Load(object sender, EventArgs e)
         {
-            txbPingResponse.Text = "";
-            txbURL.Text = "http://127.0.0.1:9000/ping";            
-            lblResult.Text = "";
+            // Load settings from Properties
+            numPort.Value = Properties.Settings.Default.Port;
+            chbAutoFindPort.Checked = Properties.Settings.Default.IsAutoFindPort;
+            chbAutoHandshake.Checked = Properties.Settings.Default.IsAutoHandshake;
+            chbAutoWSConnect.Checked = Properties.Settings.Default.IsAutoWSConnect;
+            txbProductID.Text = Properties.Settings.Default.ProductID;
+            txbAPIKey.Text = Properties.Settings.Default.APIKey;
 
-            txbHandshakeURL.Text = "http://127.0.0.1:9000/sxs/v1";
-            txbProductID.Text = "THEWOODBRIDGECOMPANY.CHACHANSXSAPP";
-            txbAPIKey.Text = "95f79bb960db4964a00c7f6a1cb5cc674f5c3410";
+            txbPingResponse.Text = "";
+            txbURLPing.Text = string.Format("http://127.0.0.1:{0}/ping", numPort.Value);            
+            lblResult.Text = "";
+                        
+            txbURLHandshake.Text = string.Format("http://127.0.0.1:{0}/sxs/v1", numPort.Value);            
+            txbURLWS.Text = string.Format("ws://localhost:{0}/sxs/v1/notifications?sessionToken=", numPort.Value);
+
 
             lblHandshakeResult.Text = "click SEND button";
                         
@@ -57,21 +65,27 @@ namespace TestEikonSxS
             bndEikonApps.DataSource = eikon.EIKONAPP;
             dgvAppList.DataSource = bndEikonApps;            
             dgvAppList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgvAppList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
+            dgvAppList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;           
             
-            txbWSURL.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=<session token>";
-
-
-
-            //ws.OnMessage += (test, a) => DebugOutput("Websocket OnMessage: " + a.Data);
+                                   
             btnModifyContext.Enabled = false;
+
+            // If auto Handshake or Or create Websocket, do it
+            if (chbAutoHandshake.Checked) {
+                btnHandshake_Click(this, new EventArgs());
+            }
+
+            if (chbAutoWSConnect.Checked)
+            {
+                btnWSConnect_Click(this, new EventArgs());
+            }
+
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
        
-            eikon.URL_PING = txbURL.Text;
+            eikon.URL_PING = txbURLPing.Text;
             txbPingResponse.Text = eikon.DoPingTest();
 
             try
@@ -123,6 +137,7 @@ namespace TestEikonSxS
 
             eikon.PRODUCT_ID = txbProductID.Text;
             eikon.APIKEY = txbAPIKey.Text;
+            eikon.URL_SXS = txbURLHandshake.Text;
             strResponse = eikon.DoHandshake(out strPostData);
 
             txbHandshakePOST.Text = strPostData;
@@ -131,7 +146,8 @@ namespace TestEikonSxS
             if (eikon.ISHANDSHAKESUCCESS)
             {
                 txbSessionToken.Text = eikon.SESSIONTOKEN;
-                txbWSURL.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=" + eikon.SESSIONTOKEN;
+                //txbURLWS.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=" + eikon.SESSIONTOKEN;
+                txbURLWS.Text = txbURLWS.Text + eikon.SESSIONTOKEN;
                 lblHandshakeResult.Text = "SUCCESS";
                 lblHandshakeResultMainUI.Text = "SUCCESS - Ready to launch Eikon Apps";          
 
@@ -172,7 +188,7 @@ namespace TestEikonSxS
         private void btnWSConnect_Click(object sender, EventArgs e)
         {
             
-            websocket = new WebSocket(txbWSURL.Text);
+            websocket = new WebSocket(txbURLWS.Text);
 
             websocket.Opened += new EventHandler(websocket_Opened);
             websocket.Closed += new EventHandler(websocket_Closed);
@@ -307,6 +323,8 @@ namespace TestEikonSxS
             {
 
                 lsbContext.Items.Add(cmbAddContext.Text);
+
+                cmbAddContext.Text = "";
             }
 
         }
@@ -462,14 +480,50 @@ namespace TestEikonSxS
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
         {
-            DialogResult confirmResult = MessageBox.Show("Save current configuration?",
+            DialogResult confirmResult = MessageBox.Show(
+@"Save the following configuration?
+
+Port Number
+Auto Find Port
+Product ID & API Key
+Auto Handshake when startup
+Auto Connect WebSocket when startup",
                                      "Save Confirmation",
                                      MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
                 // If 'Yes' is selected, Save the Configuration
+                // Save values to Properties Settings
+                Properties.Settings.Default.Port = numPort.Value;
+                Properties.Settings.Default.IsAutoFindPort = chbAutoFindPort.Checked;
+                Properties.Settings.Default.IsAutoHandshake = chbAutoHandshake.Checked;
+                Properties.Settings.Default.IsAutoWSConnect = chbAutoWSConnect.Checked;
+                Properties.Settings.Default.ProductID = txbProductID.Text;
+                Properties.Settings.Default.APIKey = txbAPIKey.Text;
 
+                Properties.Settings.Default.Save();
+                
             }
+        }
+
+        private void btnResetConfig_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmResult = MessageBox.Show("Reset configuration to the following?\n\nPort Number = 9000\nAuto Find Port: No\nProduct ID & API Key = <blank>\nAuto Handshake when startup: No\nAuto Connect WebSocket when startup:No",
+                                     "Save Confirmation",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                // If 'Yes' is selected, Reset the Perperties Settings to its original value
+                Properties.Settings.Default.Reset();
+                MainUI_Load(sender, e);
+            }
+        }
+
+        private void numPort_ValueChanged(object sender, EventArgs e)
+        {
+            txbURLPing.Text = string.Format("http://127.0.0.1:{0}/ping", numPort.Value);
+            txbURLHandshake.Text = string.Format("http://127.0.0.1:{0}/sxs/v1", numPort.Value);            
+            txbURLWS.Text = string.Format("ws://localhost:{0}/sxs/v1/notifications?sessionToken=", numPort.Value);
         }
     }
 }

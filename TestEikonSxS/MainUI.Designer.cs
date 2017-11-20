@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label5 = new System.Windows.Forms.Label();
-            this.txbHandshakeURL = new System.Windows.Forms.TextBox();
+            this.txbURLHandshake = new System.Windows.Forms.TextBox();
             this.btnHandshake = new System.Windows.Forms.Button();
             this.txbHandshakeResponse = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.dgvAppList = new System.Windows.Forms.DataGridView();
             this.label16 = new System.Windows.Forms.Label();
             this.btnWSConnect = new System.Windows.Forms.Button();
-            this.txbWSURL = new System.Windows.Forms.TextBox();
+            this.txbURLWS = new System.Windows.Forms.TextBox();
             this.btnWSDisconnect = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.lsbWSEvents = new System.Windows.Forms.ListBox();
@@ -68,7 +68,7 @@
             this.txbNewContext = new System.Windows.Forms.TextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.txbURL = new System.Windows.Forms.TextBox();
+            this.txbURLPing = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txbPingResponse = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -87,7 +87,7 @@
             this.tabConfig = new System.Windows.Forms.TabPage();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chbAutoWSConnect = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.chbAutoHandshake = new System.Windows.Forms.CheckBox();
@@ -97,6 +97,7 @@
             this.chbAutoFindPort = new System.Windows.Forms.CheckBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnResetConfig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -116,12 +117,12 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Handshake URL";
             // 
-            // txbHandshakeURL
+            // txbURLHandshake
             // 
-            this.txbHandshakeURL.Location = new System.Drawing.Point(111, 41);
-            this.txbHandshakeURL.Name = "txbHandshakeURL";
-            this.txbHandshakeURL.Size = new System.Drawing.Size(268, 20);
-            this.txbHandshakeURL.TabIndex = 10;
+            this.txbURLHandshake.Location = new System.Drawing.Point(111, 41);
+            this.txbURLHandshake.Name = "txbURLHandshake";
+            this.txbURLHandshake.Size = new System.Drawing.Size(268, 20);
+            this.txbURLHandshake.TabIndex = 10;
             // 
             // btnHandshake
             // 
@@ -240,7 +241,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(408, 307);
+            this.label13.Location = new System.Drawing.Point(408, 271);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(61, 13);
             this.label13.TabIndex = 24;
@@ -248,12 +249,12 @@
             // 
             // txbResponse
             // 
-            this.txbResponse.Location = new System.Drawing.Point(411, 323);
+            this.txbResponse.Location = new System.Drawing.Point(411, 287);
             this.txbResponse.Multiline = true;
             this.txbResponse.Name = "txbResponse";
             this.txbResponse.ReadOnly = true;
             this.txbResponse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txbResponse.Size = new System.Drawing.Size(396, 105);
+            this.txbResponse.Size = new System.Drawing.Size(396, 141);
             this.txbResponse.TabIndex = 25;
             // 
             // label14
@@ -299,12 +300,12 @@
             this.btnWSConnect.UseVisualStyleBackColor = true;
             this.btnWSConnect.Click += new System.EventHandler(this.btnWSConnect_Click);
             // 
-            // txbWSURL
+            // txbURLWS
             // 
-            this.txbWSURL.Location = new System.Drawing.Point(112, 26);
-            this.txbWSURL.Name = "txbWSURL";
-            this.txbWSURL.Size = new System.Drawing.Size(342, 20);
-            this.txbWSURL.TabIndex = 30;
+            this.txbURLWS.Location = new System.Drawing.Point(112, 26);
+            this.txbURLWS.Name = "txbURLWS";
+            this.txbURLWS.Size = new System.Drawing.Size(342, 20);
+            this.txbURLWS.TabIndex = 30;
             // 
             // btnWSDisconnect
             // 
@@ -443,7 +444,7 @@
             // 
             // btnBroadcast
             // 
-            this.btnBroadcast.Location = new System.Drawing.Point(622, 241);
+            this.btnBroadcast.Location = new System.Drawing.Point(363, 240);
             this.btnBroadcast.Name = "btnBroadcast";
             this.btnBroadcast.Size = new System.Drawing.Size(93, 28);
             this.btnBroadcast.TabIndex = 43;
@@ -453,7 +454,7 @@
             // 
             // btnStopBroadcast
             // 
-            this.btnStopBroadcast.Location = new System.Drawing.Point(721, 241);
+            this.btnStopBroadcast.Location = new System.Drawing.Point(462, 239);
             this.btnStopBroadcast.Name = "btnStopBroadcast";
             this.btnStopBroadcast.Size = new System.Drawing.Size(93, 29);
             this.btnStopBroadcast.TabIndex = 44;
@@ -482,9 +483,9 @@
             // 
             // btnModifyContext
             // 
-            this.btnModifyContext.Location = new System.Drawing.Point(721, 278);
+            this.btnModifyContext.Location = new System.Drawing.Point(745, 245);
             this.btnModifyContext.Name = "btnModifyContext";
-            this.btnModifyContext.Size = new System.Drawing.Size(93, 23);
+            this.btnModifyContext.Size = new System.Drawing.Size(72, 23);
             this.btnModifyContext.TabIndex = 47;
             this.btnModifyContext.Text = "Modify RIC";
             this.btnModifyContext.UseVisualStyleBackColor = true;
@@ -493,15 +494,15 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(483, 283);
+            this.label20.Location = new System.Drawing.Point(570, 249);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(111, 13);
+            this.label20.Size = new System.Drawing.Size(48, 13);
             this.label20.TabIndex = 48;
-            this.label20.Text = "New Ric to Broadcast";
+            this.label20.Text = "New Ric";
             // 
             // txbNewContext
             // 
-            this.txbNewContext.Location = new System.Drawing.Point(600, 280);
+            this.txbNewContext.Location = new System.Drawing.Point(624, 246);
             this.txbNewContext.Name = "txbNewContext";
             this.txbNewContext.Size = new System.Drawing.Size(115, 20);
             this.txbNewContext.TabIndex = 49;
@@ -526,12 +527,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "URL:";
             // 
-            // txbURL
+            // txbURLPing
             // 
-            this.txbURL.Location = new System.Drawing.Point(170, 25);
-            this.txbURL.Name = "txbURL";
-            this.txbURL.Size = new System.Drawing.Size(234, 20);
-            this.txbURL.TabIndex = 3;
+            this.txbURLPing.Location = new System.Drawing.Point(170, 25);
+            this.txbURLPing.Name = "txbURLPing";
+            this.txbURLPing.Size = new System.Drawing.Size(234, 20);
+            this.txbURLPing.TabIndex = 3;
             // 
             // label3
             // 
@@ -623,7 +624,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(14, 307);
+            this.label23.Location = new System.Drawing.Point(14, 271);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(116, 13);
             this.label23.TabIndex = 58;
@@ -631,12 +632,12 @@
             // 
             // txbPostData
             // 
-            this.txbPostData.Location = new System.Drawing.Point(13, 323);
+            this.txbPostData.Location = new System.Drawing.Point(13, 287);
             this.txbPostData.Multiline = true;
             this.txbPostData.Name = "txbPostData";
             this.txbPostData.ReadOnly = true;
             this.txbPostData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txbPostData.Size = new System.Drawing.Size(392, 105);
+            this.txbPostData.Size = new System.Drawing.Size(392, 141);
             this.txbPostData.TabIndex = 57;
             // 
             // label22
@@ -709,6 +710,7 @@
             // tabConfig
             // 
             this.tabConfig.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tabConfig.Controls.Add(this.btnResetConfig);
             this.tabConfig.Controls.Add(this.btnSaveConfig);
             this.tabConfig.Controls.Add(this.groupBox3);
             this.tabConfig.Controls.Add(this.groupBox2);
@@ -724,7 +726,7 @@
             // 
             this.btnSaveConfig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveConfig.Location = new System.Drawing.Point(684, 404);
+            this.btnSaveConfig.Location = new System.Drawing.Point(684, 402);
             this.btnSaveConfig.Name = "btnSaveConfig";
             this.btnSaveConfig.Size = new System.Drawing.Size(127, 26);
             this.btnSaveConfig.TabIndex = 50;
@@ -736,8 +738,8 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Controls.Add(this.txbWSURL);
+            this.groupBox3.Controls.Add(this.chbAutoWSConnect);
+            this.groupBox3.Controls.Add(this.txbURLWS);
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.btnWSConnect);
             this.groupBox3.Controls.Add(this.lblWSState);
@@ -750,15 +752,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Step 3 (Optional): establish WebSocket for Linking Context features to work:";
             // 
-            // checkBox1
+            // chbAutoWSConnect
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(625, 28);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(154, 17);
-            this.checkBox1.TabIndex = 47;
-            this.checkBox1.Text = "Auto connect when startup";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chbAutoWSConnect.AutoSize = true;
+            this.chbAutoWSConnect.Location = new System.Drawing.Point(625, 28);
+            this.chbAutoWSConnect.Name = "chbAutoWSConnect";
+            this.chbAutoWSConnect.Size = new System.Drawing.Size(154, 17);
+            this.chbAutoWSConnect.TabIndex = 47;
+            this.chbAutoWSConnect.Text = "Auto connect when startup";
+            this.chbAutoWSConnect.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -778,7 +780,7 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.btnHandshake);
             this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.txbHandshakeURL);
+            this.groupBox2.Controls.Add(this.txbURLHandshake);
             this.groupBox2.Controls.Add(this.lblHandshakeResult);
             this.groupBox2.Location = new System.Drawing.Point(13, 99);
             this.groupBox2.Name = "groupBox2";
@@ -832,7 +834,7 @@
             this.groupBox1.Controls.Add(this.chbAutoFindPort);
             this.groupBox1.Controls.Add(this.numPort);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txbURL);
+            this.groupBox1.Controls.Add(this.txbURLPing);
             this.groupBox1.Controls.Add(this.btnTest);
             this.groupBox1.Controls.Add(this.lblResult);
             this.groupBox1.Controls.Add(this.label2);
@@ -866,7 +868,7 @@
             0,
             0});
             this.numPort.Minimum = new decimal(new int[] {
-            9000,
+            8990,
             0,
             0,
             0});
@@ -874,10 +876,11 @@
             this.numPort.Size = new System.Drawing.Size(66, 20);
             this.numPort.TabIndex = 9;
             this.numPort.Value = new decimal(new int[] {
-            9000,
+            8990,
             0,
             0,
             0});
+            this.numPort.ValueChanged += new System.EventHandler(this.numPort_ValueChanged);
             // 
             // label1
             // 
@@ -887,6 +890,16 @@
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 8;
             this.label1.Text = "Port: ";
+            // 
+            // btnResetConfig
+            // 
+            this.btnResetConfig.Location = new System.Drawing.Point(578, 404);
+            this.btnResetConfig.Name = "btnResetConfig";
+            this.btnResetConfig.Size = new System.Drawing.Size(100, 23);
+            this.btnResetConfig.TabIndex = 51;
+            this.btnResetConfig.Text = "Reset Config";
+            this.btnResetConfig.UseVisualStyleBackColor = true;
+            this.btnResetConfig.Click += new System.EventHandler(this.btnResetConfig_Click);
             // 
             // MainUI
             // 
@@ -923,7 +936,7 @@
 
         #endregion
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txbHandshakeURL;
+        private System.Windows.Forms.TextBox txbURLHandshake;
         private System.Windows.Forms.Button btnHandshake;
         private System.Windows.Forms.TextBox txbHandshakeResponse;
         private System.Windows.Forms.Label label9;
@@ -942,7 +955,7 @@
         private System.Windows.Forms.DataGridView dgvAppList;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button btnWSConnect;
-        private System.Windows.Forms.TextBox txbWSURL;
+        private System.Windows.Forms.TextBox txbURLWS;
         private System.Windows.Forms.Button btnWSDisconnect;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ListBox lsbWSEvents;
@@ -962,7 +975,7 @@
         private System.Windows.Forms.TextBox txbNewContext;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txbURL;
+        private System.Windows.Forms.TextBox txbURLPing;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txbPingResponse;
         private System.Windows.Forms.Label label4;
@@ -980,7 +993,7 @@
         private System.Windows.Forms.CheckBox chbAutoHandshake;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnSaveConfig;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chbAutoWSConnect;
         private System.Windows.Forms.Button btnWSConnectMainUI;
         private System.Windows.Forms.Button btnHandshakeMainUI;
         private System.Windows.Forms.Label lblWSStateMainUI;
@@ -991,6 +1004,7 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txbPostData;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btnResetConfig;
     }
 }
 
