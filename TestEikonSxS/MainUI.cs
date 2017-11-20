@@ -43,8 +43,7 @@ namespace TestEikonSxS
         private void MainUI_Load(object sender, EventArgs e)
         {
             // Load settings from Properties
-            numPort.Value = Properties.Settings.Default.Port;
-            chbAutoFindPort.Checked = Properties.Settings.Default.IsAutoFindPort;
+            numPort.Value = Properties.Settings.Default.Port;            
             chbAutoHandshake.Checked = Properties.Settings.Default.IsAutoHandshake;
             chbAutoWSConnect.Checked = Properties.Settings.Default.IsAutoWSConnect;
             txbProductID.Text = Properties.Settings.Default.ProductID;
@@ -95,10 +94,13 @@ namespace TestEikonSxS
                 if (nResultPort == eikon.PORT)
                 {
                     lblResult.Text = "SUCCESS at port " + txbPingResponse.Text;
+                    eikon.ISVALIDPORT = true;
 
                 } else
                 {
-                    lblResult.Text = "FAILED";
+                    lblResult.Text = "FAILED";        
+                    
+
                 }
 
             }
@@ -149,7 +151,7 @@ namespace TestEikonSxS
                 //txbURLWS.Text = @"ws://localhost:9000/sxs/v1/notifications?sessionToken=" + eikon.SESSIONTOKEN;
                 txbURLWS.Text = txbURLWS.Text + eikon.SESSIONTOKEN;
                 lblHandshakeResult.Text = "SUCCESS";
-                lblHandshakeResultMainUI.Text = "SUCCESS - Ready to launch Eikon Apps";          
+                lblHandshakeResultMainUI.Text = "SUCCESS at port " + eikon.PORT +" - Ready to launch Eikon Apps";          
 
             }
             else
@@ -484,7 +486,6 @@ namespace TestEikonSxS
 @"Save the following configuration?
 
 Port Number
-Auto Find Port
 Product ID & API Key
 Auto Handshake when startup
 Auto Connect WebSocket when startup",
@@ -494,8 +495,7 @@ Auto Connect WebSocket when startup",
             {
                 // If 'Yes' is selected, Save the Configuration
                 // Save values to Properties Settings
-                Properties.Settings.Default.Port = numPort.Value;
-                Properties.Settings.Default.IsAutoFindPort = chbAutoFindPort.Checked;
+                Properties.Settings.Default.Port = numPort.Value;                
                 Properties.Settings.Default.IsAutoHandshake = chbAutoHandshake.Checked;
                 Properties.Settings.Default.IsAutoWSConnect = chbAutoWSConnect.Checked;
                 Properties.Settings.Default.ProductID = txbProductID.Text;
@@ -508,7 +508,7 @@ Auto Connect WebSocket when startup",
 
         private void btnResetConfig_Click(object sender, EventArgs e)
         {
-            DialogResult confirmResult = MessageBox.Show("Reset configuration to the following?\n\nPort Number = 9000\nAuto Find Port: No\nProduct ID & API Key = <blank>\nAuto Handshake when startup: No\nAuto Connect WebSocket when startup:No",
+            DialogResult confirmResult = MessageBox.Show("Reset configuration to the following?\n\nPort Number = 9000\nProduct ID & API Key = <blank>\nAuto Handshake when startup: No\nAuto Connect WebSocket when startup:No",
                                      "Save Confirmation",
                                      MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)

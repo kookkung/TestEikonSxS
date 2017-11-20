@@ -94,7 +94,6 @@
             this.txbHandshakePOST = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chbAutoFindPort = new System.Windows.Forms.CheckBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.btnResetConfig = new System.Windows.Forms.Button();
@@ -831,7 +830,6 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.chbAutoFindPort);
             this.groupBox1.Controls.Add(this.numPort);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txbURLPing);
@@ -849,16 +847,6 @@
             this.groupBox1.Text = "Step 0 (optional): Test connection to Eikon SxS server - send HTTP GET to localho" +
     "st port 9000";
             // 
-            // chbAutoFindPort
-            // 
-            this.chbAutoFindPort.AutoSize = true;
-            this.chbAutoFindPort.Location = new System.Drawing.Point(19, 51);
-            this.chbAutoFindPort.Name = "chbAutoFindPort";
-            this.chbAutoFindPort.Size = new System.Drawing.Size(93, 17);
-            this.chbAutoFindPort.TabIndex = 10;
-            this.chbAutoFindPort.Text = "Auto Find Port";
-            this.chbAutoFindPort.UseVisualStyleBackColor = true;
-            // 
             // numPort
             // 
             this.numPort.Location = new System.Drawing.Point(54, 25);
@@ -868,7 +856,7 @@
             0,
             0});
             this.numPort.Minimum = new decimal(new int[] {
-            8990,
+            9000,
             0,
             0,
             0});
@@ -876,7 +864,7 @@
             this.numPort.Size = new System.Drawing.Size(66, 20);
             this.numPort.TabIndex = 9;
             this.numPort.Value = new decimal(new int[] {
-            8990,
+            9000,
             0,
             0,
             0});
@@ -986,7 +974,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown numPort;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chbAutoFindPort;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txbHandshakePOST;
         private System.Windows.Forms.Label label8;
