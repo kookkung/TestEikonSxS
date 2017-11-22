@@ -7,8 +7,8 @@
     <ProjectGuid>{6DAD4684-661F-416E-AFB6-D06987311CA3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary1</RootNamespace>
-    <AssemblyName>ClassLibrary1</AssemblyName>
+    <RootNamespace>EikonSxSClassLibrary</RootNamespace>
+    <AssemblyName>EikonSxSClassLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

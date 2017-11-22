@@ -85,6 +85,7 @@
             this.btnWSConnectMainUI = new System.Windows.Forms.Button();
             this.btnHandshakeMainUI = new System.Windows.Forms.Button();
             this.tabConfig = new System.Windows.Forms.TabPage();
+            this.btnResetConfig = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chbAutoWSConnect = new System.Windows.Forms.CheckBox();
@@ -96,7 +97,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnResetConfig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -721,6 +721,16 @@
             this.tabConfig.TabIndex = 1;
             this.tabConfig.Text = "Config";
             // 
+            // btnResetConfig
+            // 
+            this.btnResetConfig.Location = new System.Drawing.Point(578, 404);
+            this.btnResetConfig.Name = "btnResetConfig";
+            this.btnResetConfig.Size = new System.Drawing.Size(100, 23);
+            this.btnResetConfig.TabIndex = 51;
+            this.btnResetConfig.Text = "Reset Config";
+            this.btnResetConfig.UseVisualStyleBackColor = true;
+            this.btnResetConfig.Click += new System.EventHandler(this.btnResetConfig_Click);
+            // 
             // btnSaveConfig
             // 
             this.btnSaveConfig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -879,16 +889,6 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Port: ";
             // 
-            // btnResetConfig
-            // 
-            this.btnResetConfig.Location = new System.Drawing.Point(578, 404);
-            this.btnResetConfig.Name = "btnResetConfig";
-            this.btnResetConfig.Size = new System.Drawing.Size(100, 23);
-            this.btnResetConfig.TabIndex = 51;
-            this.btnResetConfig.Text = "Reset Config";
-            this.btnResetConfig.UseVisualStyleBackColor = true;
-            this.btnResetConfig.Click += new System.EventHandler(this.btnResetConfig_Click);
-            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -903,7 +903,7 @@
             this.Name = "MainUI";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Test Eikon Side by Side API";
+            this.Text = "MooMoo Eikon Side by Side API";
             this.Load += new System.EventHandler(this.MainUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppList)).EndInit();
             this.tabControl1.ResumeLayout(false);

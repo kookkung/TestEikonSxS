@@ -208,4 +208,35 @@ namespace EikonSxSClassLibrary
     }
 
 
+    public class JsonSymbology
+    {
+        public string type { get; set; } = "";
+        public string value { get; set; } = "";
+    }
+
+
+    /* Response received when Eikon user select to Share App:
+    {"command":"shareApp","action":"share_app","appId":"THEWOODBRIDGECOMPANY.CHACHANSXSAPP",
+    "appURI":"eikon://share/jt9QqU0ZS0K4kfwjIQagVg/App",
+    "context":"{\"name\":\"Quote Object\",\"entities\":[{\"datasource\":\"Q\",\"RIC\":\"BBL.BK\"}],\"properties\":[]}",
+    "image":"iVBORw0K....","symbology":"[{\"type\":\"RIC\",\"value\":\"BBL.BK\"},{\"type\":\"ticker\",\"value\":\"BBL\"},{\"type\":\"OAPermID\",\"value\":\"4295893055\"},{\"type\":\"ISIN\",\"value\":\"TH0001010006\"}]",
+    "title":"BBL.BK Quote"}
+    */
+public class JsonShareApp
+    {
+        public string command { get; set; } = "shareApp";
+        public string action { get; set; } = "share_app";
+        public string appId { get; set; } = "";
+        public string appURI { get; set; } = "";
+
+        public JsonContext context { get; set; } = new JsonContext();
+
+        public string image { get; set; } = "";
+
+        public List<JsonSymbology> symbology { get; set; } = new List<JsonSymbology>();
+
+        public string title { get; set; } = "";
+
+    }
+
 }

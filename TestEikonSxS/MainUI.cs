@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using WebSocket4Net;
 using SuperSocket.ClientEngine;
 using System.Timers;
-
+using System.Text.RegularExpressions;
 
 namespace TestEikonSxS
 {
@@ -236,11 +236,7 @@ namespace TestEikonSxS
                 this.Invoke(d, new object[] { text });
             }
             else
-            {
-                
-                // Add MessageReceived to the listbox
-                lsbWSEvents.Items.Add(text);
-
+            {                
 
                 // Set Label to show the current Websocket State
                 if (websocket != null)
@@ -270,14 +266,11 @@ namespace TestEikonSxS
                 // Process JSON Message Received
                 string strResult = "";
 
+                // Process WebSocket incoming message
                 strResult = eikon.ProcessIncomingWSMessage(text);
 
-                // Show message in WebSoct Event box
-                //if (!string.IsNullOrEmpty(strResult))
-                  //  lsbWSEvents.Items.Add(strResult);
-
-                lsbWSEvents.SelectedIndex = lsbWSEvents.Items.Count - 1;
-
+                
+                //Process further ,based on Result return on eikon Process Incoming Message
                 // if message = show / hide Link,  change background color
                 if (string.Equals(strResult, "showFeedbackForLinking"))
                 {                    
@@ -287,6 +280,33 @@ namespace TestEikonSxS
                     this.BackColor = Color.Empty;
                 }
 
+                // if message = shareApp,  show ShareAppUI form and display the received message & image
+                if (string.Equals(strResult, "shareApp"))
+                {
+                    string strShareAppMessage = "";
+                    string strShareAppTitle = "";
+
+                    strShareAppMessage = string.Format("Received ShareApp message from Eikon:\n\nTitle:{0}\nLink: {1}\n{2}", eikon.SHAREAPP.title, eikon.SHAREAPP.appURI, eikon.SHAREAPP.appId);
+                    strShareAppTitle = string.Format("Share via {0}", eikon.APPNAME);
+
+                    ShareAppUI aShareApp = new ShareAppUI();
+                    aShareApp.eikon = eikon;
+                    aShareApp.StartPosition = FormStartPosition.CenterScreen;
+                    aShareApp.TopMost = true;                    
+                    aShareApp.Show();
+
+
+                    // For shareApp, the message received from Eikon contains Image in Base64, which is too long to display in Listbox
+                    // Solution: Find that Image Base64 and replace/remove it                                        
+                    text = Regex.Replace(text, @"""image"":""(.*?)(?:"")", @"""image"":""<Base64String>""");
+                    
+
+                }
+
+                // Add MessageReceived to the listbox
+                lsbWSEvents.Items.Add(text);
+                lsbWSEvents.SelectedIndex = lsbWSEvents.Items.Count - 1;
+                DebugOutput(text);
 
                 bndEikonApps.ResetBindings(false);
             }

@@ -36,12 +36,15 @@ namespace EikonSxSClassLibrary
         public string URL_SXS { get; set; } = "http://127.0.0.1:9000/sxs/v1";
         public string PRODUCT_ID { get; set; } = "";
         public string APIKEY { get; set; } = "";
+        public string APPNAME { get; set; } = "";  // App name such ase "Test  Side by Side Eikon "
 
-        
+
         public string SESSIONTOKEN { get; set; } = "";
         public bool ISHANDSHAKESUCCESS  { get; set; } = false;
 
-        public List<EikonApp> EIKONAPP { get; set; } = new List<EikonApp>();
+        public List<EikonApp> EIKONAPP { get; set; } = new List<EikonApp>();           // List of Eikon Apps
+
+        public JsonShareApp SHAREAPP { get; set; } = new JsonShareApp();                // ShareApp received from Eikon
 
 
         private RestClient restClient = new RestClient();
@@ -92,7 +95,8 @@ namespace EikonSxSClassLibrary
                 if (myObject.isSuccess == true)
                 {
                     SESSIONTOKEN = myObject.sessionToken;
-                    ISHANDSHAKESUCCESS = true;              
+                    ISHANDSHAKESUCCESS = true;
+                    APPNAME = myObject.info.appName;
 
                 }
                 else
@@ -237,6 +241,33 @@ namespace EikonSxSClassLibrary
         }
 
 
+        // Deserialize ShareApp message received to the ShareApp
+        public string ProcessShareApp(string strMessage)
+        {
+            string strResult = "";
+
+            try
+            {
+                var myObject = JsonConvert.DeserializeObject<dynamic>(strMessage);
+
+                SHAREAPP.title = myObject.title;
+                SHAREAPP.appURI = myObject.appURI;
+                SHAREAPP.action = myObject.action;
+                SHAREAPP.appId = myObject.appId;
+                SHAREAPP.command = myObject.command;
+                SHAREAPP.image = myObject.image;
+
+                strResult = "SUCCESS";
+
+            }
+            catch (Exception)
+            {
+                strResult = "FALED";
+                
+            }            
+
+            return strResult;
+        }
     
 
 
@@ -284,6 +315,12 @@ namespace EikonSxSClassLibrary
                         break;
                     case "showFeedbackForLinking":
                         strResponse = "showFeedbackForLinking";
+                        break;
+
+                    // Received Share message from Eikon
+                    case "shareApp":
+                        strResponse = "shareApp";
+                        ProcessShareApp(strMessage);
                         break;
 
                     case "workspaceChanged":
