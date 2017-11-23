@@ -161,6 +161,7 @@
             this.pictEikonApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictEikonApp.TabIndex = 5;
             this.pictEikonApp.TabStop = false;
+            this.pictEikonApp.Click += new System.EventHandler(this.pictEikonApp_Click);
             // 
             // ShareAppUI
             // 

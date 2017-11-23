@@ -76,5 +76,16 @@ namespace TestEikonSxS
 
             }
         }
+
+        private void pictEikonApp_Click(object sender, EventArgs e)
+        {
+            ImageUI imageUI = new ImageUI();
+
+            imageUI.image = pictEikonApp.Image;
+            imageUI.Text = eikon.SHAREAPP.title;
+
+            imageUI.ShowDialog();
+
+        }
     }
 }

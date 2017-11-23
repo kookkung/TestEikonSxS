@@ -58,6 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageUI.Designer.cs">
+      <DependentUpon>ImageUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="ShareAppUI.Designer.cs">
       <DependentUpon>ShareAppUI.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ImageUI.resx">
+      <DependentUpon>ImageUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
     </EmbeddedResource>

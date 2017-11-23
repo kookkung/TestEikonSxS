@@ -240,7 +240,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(408, 271);
+            this.label13.Location = new System.Drawing.Point(546, 271);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(61, 13);
             this.label13.TabIndex = 24;
@@ -248,12 +248,14 @@
             // 
             // txbResponse
             // 
-            this.txbResponse.Location = new System.Drawing.Point(411, 287);
+            this.txbResponse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txbResponse.Location = new System.Drawing.Point(549, 287);
             this.txbResponse.Multiline = true;
             this.txbResponse.Name = "txbResponse";
             this.txbResponse.ReadOnly = true;
             this.txbResponse.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txbResponse.Size = new System.Drawing.Size(396, 141);
+            this.txbResponse.Size = new System.Drawing.Size(258, 141);
             this.txbResponse.TabIndex = 25;
             // 
             // label14
@@ -269,6 +271,8 @@
             // 
             this.dgvAppList.AllowUserToAddRows = false;
             this.dgvAppList.AllowUserToDeleteRows = false;
+            this.dgvAppList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAppList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvAppList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAppList.Location = new System.Drawing.Point(363, 102);
@@ -482,6 +486,7 @@
             // 
             // btnModifyContext
             // 
+            this.btnModifyContext.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnModifyContext.Location = new System.Drawing.Point(745, 245);
             this.btnModifyContext.Name = "btnModifyContext";
             this.btnModifyContext.Size = new System.Drawing.Size(72, 23);
@@ -501,6 +506,8 @@
             // 
             // txbNewContext
             // 
+            this.txbNewContext.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txbNewContext.Location = new System.Drawing.Point(624, 246);
             this.txbNewContext.Name = "txbNewContext";
             this.txbNewContext.Size = new System.Drawing.Size(115, 20);
@@ -636,7 +643,7 @@
             this.txbPostData.Name = "txbPostData";
             this.txbPostData.ReadOnly = true;
             this.txbPostData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txbPostData.Size = new System.Drawing.Size(392, 141);
+            this.txbPostData.Size = new System.Drawing.Size(530, 141);
             this.txbPostData.TabIndex = 57;
             // 
             // label22
@@ -894,14 +901,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(852, 619);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lsbWSEvents);
             this.Controls.Add(this.label17);
             this.Name = "MainUI";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MooMoo Eikon Side by Side API";
             this.Load += new System.EventHandler(this.MainUI_Load);
